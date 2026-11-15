@@ -1,0 +1,3 @@
+type,title,url,poster,order,visible
+photo,Studio photo title,https://example.com/studio-photo.webp,,1,FALSE
+video,Studio video title,https://example.com/studio-video.mp4,https://example.com/studio-video-poster.webp,2,FALSE

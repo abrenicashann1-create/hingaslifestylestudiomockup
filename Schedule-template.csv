@@ -1,0 +1,2 @@
+sessionId,classId,date,startTime,durationMin,coach,seatLimit,active
+replace-with-session-id,replace-with-class-id,YYYY-MM-DD,09:00,60,,8,TRUE

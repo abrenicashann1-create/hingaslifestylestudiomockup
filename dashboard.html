@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Studio Management Dashboard — Hingas Lifestyle Studio</title>
+  <meta name="description" content="Official management portal and front-desk reception check-in system for Hingas Lifestyle Studio.">
+  <link rel="icon" type="image/png" href="logo(2).png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="dashboard-body">
+  <!-- Security Staff Authentication Portal Overlay -->
+  <div class="pin-gate-overlay" id="pin-gate" role="dialog" aria-modal="true">
+    <div class="pin-gate-card auth-modal-card">
+      <div class="pin-brand">
+        <img src="logo(2).png" alt="Hingas Lifestyle Studio" width="150" height="66">
+      </div>
+      <div class="auth-badge-pill">OFFICIAL STAFF &amp; OPERATIONS GATEWAY</div>
+      <h2>Studio Staff Portal</h2>
+      <p class="auth-sub">Access live attendance roster, QR pass check-in, walk-in ticketing, and session control.</p>
+
+      <!-- Auth Tabs: Sign In / Register -->
+      <div class="auth-nav-tabs" role="tablist">
+        <button type="button" class="auth-tab-btn active" id="tab-btn-login">
+          <svg class="ui-icon" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>
+          Staff Sign In
+        </button>
+        <button type="button" class="auth-tab-btn" id="tab-btn-register">
+          <svg class="ui-icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+          Register Staff Account
+        </button>
+      </div>
+
+      <!-- TAB 1: Log In Form -->
+      <form id="staff-login-form" class="auth-form-pane active">
+        <div id="login-feedback" class="auth-alert" style="display:none;"></div>
+        
+        <div class="auth-field">
+          <label for="login-email">Staff Work Email</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">
+              <svg class="ui-icon" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </span>
+            <input type="email" id="login-email" placeholder="e.g. frontdesk@hingas.ph" autocomplete="username" required>
+          </div>
+        </div>
+
+        <div class="auth-field">
+          <label for="login-password">Password</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">
+              <svg class="ui-icon" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password" required>
+            <button type="button" class="auth-pw-toggle" data-target="login-password" title="Toggle password visibility">
+              <svg class="ui-icon pw-eye-icon" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="pin-remember-row" style="display:flex;justify-content:space-between;align-items:center;">
+          <label style="display:flex;align-items:center;gap:6px;">
+            <input type="checkbox" id="login-remember" checked> Keep me logged in
+          </label>
+          <span style="font-size:11px;color:var(--dash-muted);">Surigao Studio Terminal</span>
+        </div>
+
+        <button type="submit" class="button button-gold pin-submit-btn" id="btn-login-submit">
+          Sign In to Staff Portal &rarr;
+        </button>
+
+        <!-- Quick 1-Click Credential Chips for seamless testing -->
+        <div class="quick-creds-box">
+          <span class="quick-creds-title">Preloaded Staff Accounts (Click to Sign In):</span>
+          <div class="quick-creds-chips">
+            <button type="button" class="cred-chip" data-email="frontdesk@hingas.ph" data-pass="staff2026">
+              <strong>Front Desk</strong> <span>staff2026</span>
+            </button>
+            <button type="button" class="cred-chip" data-email="manager@hingas.ph" data-pass="hingas2026">
+              <strong>Manager</strong> <span>hingas2026</span>
+            </button>
+            <button type="button" class="cred-chip" data-email="coach.alex@hingas.ph" data-pass="coach2026">
+              <strong>Coach Alex</strong> <span>coach2026</span>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- TAB 2: Registration Form -->
+      <form id="staff-register-form" class="auth-form-pane" style="display:none;">
+        <div id="register-feedback" class="auth-alert" style="display:none;"></div>
+
+        <div class="auth-field">
+          <label for="reg-name">Full Name *</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">
+              <svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <input type="text" id="reg-name" placeholder="e.g. Maria Santos" required>
+          </div>
+        </div>
+
+        <div class="auth-row-2col">
+          <div class="auth-field">
+            <label for="reg-email">Work Email *</label>
+            <div class="auth-input-wrap">
+              <span class="auth-input-icon">
+                <svg class="ui-icon" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              </span>
+              <input type="email" id="reg-email" placeholder="e.g. maria@hingas.ph" required>
+            </div>
+          </div>
+          <div class="auth-field">
+            <label for="reg-phone">Mobile Number</label>
+            <div class="auth-input-wrap">
+              <span class="auth-input-icon">
+                <svg class="ui-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </span>
+              <input type="tel" id="reg-phone" placeholder="0917 123 4567">
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-field">
+          <label for="reg-role">Staff Role / Assignment *</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">
+              <svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/><circle cx="7" cy="7" r=".5" fill="currentColor"/></svg>
+            </span>
+            <select id="reg-role" required>
+              <option value="receptionist" selected>Front Desk Receptionist (Check-in, walk-in, daily roster)</option>
+              <option value="coach">Studio Instructor / Coach (Attendance, class schedule)</option>
+              <option value="manager">Studio Operations Manager (Full operational &amp; roster controls)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="auth-row-2col">
+          <div class="auth-field">
+            <label for="reg-password">Password (min 6 chars) *</label>
+            <div class="auth-input-wrap">
+              <span class="auth-input-icon">
+                <svg class="ui-icon" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <input type="password" id="reg-password" minlength="6" placeholder="Choose password" required>
+              <button type="button" class="auth-pw-toggle" data-target="reg-password">
+                <svg class="ui-icon pw-eye-icon" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="auth-field">
+            <label for="reg-confirm">Confirm Password *</label>
+            <div class="auth-input-wrap">
+              <span class="auth-input-icon">
+                <svg class="ui-icon" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <input type="password" id="reg-confirm" minlength="6" placeholder="Confirm password" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-field">
+          <label for="reg-authcode" style="display:flex;justify-content:space-between;">
+            <span>Studio Master Passcode *</span>
+            <span style="font-size:11px;color:#38bdf8;">Required for authorization</span>
+          </label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">
+              <svg class="ui-icon" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>
+            </span>
+            <input type="password" id="reg-authcode" placeholder="Enter Studio Auth Code (e.g. HINGAS-STAFF-2026)" required>
+          </div>
+          <span class="auth-field-hint">Prevents public registration. Default code: <code>HINGAS-STAFF-2026</code> (or <code>hingas2026</code>)</span>
+        </div>
+
+        <button type="submit" class="button button-gold pin-submit-btn" id="btn-register-submit">
+          Create Staff Account &amp; Log In &rarr;
+        </button>
+      </form>
+
+      <div class="pin-footer-links">
+        <a href="index.html">&larr; Main Website</a>
+        <a href="database/schema.sql" download="hingas_studio_schema.sql" title="Download MySQL Schema">MySQL Schema (schema.sql)</a>
+        <a href="owner.html" style="color:#38bdf8;font-weight:700;">Owner Portal &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Main Layout -->
+  <div class="dashboard-app-wrap" id="dashboard-app" style="display: none;">
+    <!-- Top Header Navigation -->
+    <header class="dash-topbar">
+      <div class="dash-topbar-left">
+        <a class="dash-brand" href="dashboard.html">
+          <img src="logo(2).png" alt="Hingas Logo" width="130" height="58">
+        </a>
+        <span class="dash-badge-status"><span class="status-dot"></span> Studio Live</span>
+        <span class="dash-clock" id="dash-live-clock">Loading time...</span>
+      </div>
+
+      <div class="dash-topbar-right">
+        <!-- Active Staff Identity Pill -->
+        <div class="dash-staff-pill" id="dash-staff-pill">
+          <div class="dash-staff-avatar" id="dash-staff-avatar">FD</div>
+          <div class="dash-staff-info">
+            <span class="dash-staff-name" id="dash-staff-name">Front Desk</span>
+            <span class="dash-staff-role" id="dash-staff-role">Receptionist</span>
+          </div>
+          <button type="button" class="dash-signout-btn" id="btn-staff-signout" title="Sign out of staff account">
+            Sign Out
+          </button>
+        </div>
+
+        <button type="button" class="button button-gold dash-walkin-btn" id="btn-open-walkin">
+          + Walk-in Student
+        </button>
+        <a href="owner.html" class="button button-gold" style="font-size:12px;min-height:38px;padding:0 14px;" title="Open Executive Owner Dashboard">
+          Owner Portal
+        </a>
+        <a href="booking.html" target="_blank" class="button button-glass dash-nav-link" title="Open Customer Booking Portal">
+          Booking Portal &nearr;
+        </a>
+        <a href="index.html" target="_blank" class="button button-glass dash-nav-link" title="Open Main Website">
+          Website &nearr;
+        </a>
+      </div>
+    </header>
+
+    <div class="dash-container">
+      <!-- KPI Stats Banner -->
+      <section class="dash-kpi-grid">
+        <div class="kpi-card">
+          <span class="kpi-label">TODAY'S BOOKINGS</span>
+          <div class="kpi-value-wrap">
+            <strong class="kpi-value" id="kpi-today-bookings">0</strong>
+            <span class="kpi-sub" id="kpi-today-seats">0 seats reserved</span>
+          </div>
+          <span class="kpi-icon">
+            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>
+          </span>
+        </div>
+
+        <div class="kpi-card">
+          <span class="kpi-label">CHECK-IN RATE</span>
+          <div class="kpi-value-wrap">
+            <strong class="kpi-value" id="kpi-checkin-rate">0%</strong>
+            <span class="kpi-sub" id="kpi-checkin-count">0 checked in</span>
+          </div>
+          <span class="kpi-icon">
+            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </span>
+        </div>
+
+        <div class="kpi-card highlight-kpi">
+          <span class="kpi-label">TODAY'S REVENUE</span>
+          <div class="kpi-value-wrap">
+            <strong class="kpi-value" id="kpi-today-revenue">&#8369;0</strong>
+            <span class="kpi-sub" id="kpi-month-revenue">Month: &#8369;0</span>
+          </div>
+          <span class="kpi-icon">
+            <svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 8h6"/><path d="M9 12h6"/><path d="M9 8v8"/><path d="M12 8a3 3 0 0 1 0 6"/></svg>
+          </span>
+        </div>
+
+        <div class="kpi-card">
+          <span class="kpi-label">ACTIVE SESSIONS TODAY</span>
+          <div class="kpi-value-wrap">
+            <strong class="kpi-value" id="kpi-active-sessions">0</strong>
+            <span class="kpi-sub" id="kpi-next-session">Next: &mdash;</span>
+          </div>
+          <span class="kpi-icon">
+            <svg class="ui-icon" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+          </span>
+        </div>
+      </section>
+
+      <!-- Main Section Tabs -->
+      <nav class="dash-nav-tabs" role="tablist">
+        <button type="button" class="dash-tab active" data-tab="tab-attendance">
+          <svg class="ui-icon" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/></svg>
+          Live Roster &amp; Check-In
+        </button>
+        <button type="button" class="dash-tab" data-tab="tab-scanner">
+          <svg class="ui-icon" viewBox="0 0 24 24"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/></svg>
+          Fast QR Ticket Validator
+        </button>
+        <button type="button" class="dash-tab" data-tab="tab-schedule">
+          <svg class="ui-icon" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+          Schedule &amp; Sessions
+        </button>
+        <button type="button" class="dash-tab" data-tab="tab-requests">
+          <svg class="ui-icon" viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+          Rental &amp; Inquiries (<span id="inquiry-count-badge">0</span>)
+        </button>
+        <button type="button" class="dash-tab" data-tab="tab-database">
+          <svg class="ui-icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Staff &amp; Database
+        </button>
+      </nav>
+
+      <!-- TAB 1: Attendance & Bookings Roster -->
+      <section class="dash-tab-content active" id="tab-attendance">
+        <div class="roster-toolbar">
+          <div class="roster-search">
+            <span class="search-icon">
+              <svg class="ui-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </span>
+            <input type="text" id="roster-search-input" placeholder="Search attendee name, ref code (HG-), or phone...">
+          </div>
+
+          <div class="roster-filters">
+            <select id="filter-roster-class">
+              <option value="all">All Classes</option>
+            </select>
+
+            <select id="filter-roster-status">
+              <option value="all">All Statuses</option>
+              <option value="paid">Confirmed (Paid)</option>
+              <option value="checked-in">Checked In</option>
+              <option value="held">Held</option>
+            </select>
+
+            <button type="button" class="button button-glass roster-btn" id="btn-export-csv">
+              <svg class="ui-icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              Export CSV
+            </button>
+            <button type="button" class="button button-glass roster-btn" id="btn-print-roster">
+              <svg class="ui-icon" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+              Print Sheet
+            </button>
+          </div>
+        </div>
+
+        <div class="roster-table-wrap">
+          <table class="roster-table">
+            <thead>
+              <tr>
+                <th>REF #</th>
+                <th>ATTENDEE</th>
+                <th>CONTACT</th>
+                <th>CLASS / TIME</th>
+                <th>SEATS</th>
+                <th>AMOUNT</th>
+                <th>STATUS</th>
+                <th>ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="roster-tbody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+          <div id="roster-empty" class="dash-empty-state" style="display: none;">
+            <span class="empty-icon-wrap">
+              <svg class="ui-icon" style="width:36px;height:36px;stroke-width:1.5;" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+            </span>
+            <h4>No bookings found</h4>
+            <p>No attendees match your current search or filter criteria.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: Fast QR Ticket Validator -->
+      <section class="dash-tab-content" id="tab-scanner">
+        <div class="scanner-container">
+          <div class="scanner-card">
+            <h3>Quick Reception Voucher Validator</h3>
+            <p>Scan a customer QR code using a barcode reader, or manually enter the <code>HG-</code> booking reference from their phone.</p>
+            
+            <div class="scanner-input-box">
+              <input type="text" id="scanner-input" placeholder="Scan or enter reference code (e.g. HG-8F2B1C)" autofocus>
+              <button type="button" class="button button-gold" id="btn-verify-ticket">Verify Pass &rarr;</button>
+            </div>
+
+            <div class="scanner-result-box" id="scanner-result" style="display: none;">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: Schedule & Sessions -->
+      <section class="dash-tab-content" id="tab-schedule">
+        <div class="schedule-dash-header">
+          <div>
+            <h3>Studio Weekly Schedule &amp; Capacity</h3>
+            <p>Active sessions, room assignments, and current seat bookings.</p>
+          </div>
+        </div>
+        <div class="schedule-sessions-grid" id="dash-schedule-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- TAB 4: Rental & Inquiries -->
+      <section class="dash-tab-content" id="tab-requests">
+        <div class="requests-dash-header">
+          <h3>Studio Rental &amp; Package Inquiries</h3>
+          <p>Aqua Room and Main Studio booking inquiries from the website.</p>
+        </div>
+        <div class="requests-list" id="dash-requests-list">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- TAB 5: Staff & Database Management -->
+      <section class="dash-tab-content" id="tab-database">
+        <div class="db-section-grid">
+          <!-- Staff Accounts Directory -->
+          <div class="db-card">
+            <div class="db-card-header">
+              <div>
+                <h3>Registered Staff Directory</h3>
+                <p>Authorized front desk receptionists, coaches, and managers.</p>
+              </div>
+              <button type="button" class="button button-gold" id="btn-open-add-staff" style="font-size:12px;padding:8px 16px;">
+                + Add Staff Account
+              </button>
+            </div>
+
+            <div class="roster-table-wrap" style="margin-top:16px;">
+              <table class="roster-table" id="table-staff-list">
+                <thead>
+                  <tr>
+                    <th>Staff Code</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Last Active</th>
+                  </tr>
+                </thead>
+                <tbody id="staff-table-body">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Database Tools & Backup -->
+          <div class="db-card">
+            <div class="db-card-header">
+              <div>
+                <h3>Database &amp; System Backup</h3>
+                <p>SQL schema, live database backup, and sync status for WAMP / MySQL.</p>
+              </div>
+              <span class="db-status-badge" id="db-connection-status">
+                <span class="status-dot"></span> LocalStorage &amp; MySQL Ready
+              </span>
+            </div>
+
+            <div class="db-tools-grid">
+              <div class="db-tool-item">
+                <div class="db-tool-icon">
+                  <svg class="ui-icon" style="width:28px;height:28px;color:#38bdf8;" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <div class="db-tool-info">
+                  <strong>MySQL Schema File (schema.sql)</strong>
+                  <p>Complete relational database tables: <code>staff_users</code>, <code>bookings</code>, <code>classes</code>, <code>sessions_schedule</code>, <code>rental_inquiries</code>, and <code>staff_audit_logs</code>.</p>
+                </div>
+                <a href="database/schema.sql" download="hingas_studio_schema.sql" class="button button-glass db-action-btn">
+                  Download schema.sql &darr;
+                </a>
+              </div>
+
+              <div class="db-tool-item">
+                <div class="db-tool-icon">
+                  <svg class="ui-icon" style="width:28px;height:28px;color:#38bdf8;" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                </div>
+                <div class="db-tool-info">
+                  <strong>Live Database Snapshot (JSON)</strong>
+                  <p>Exports all current bookings, attendees, staff roster, and inquiries as an instant JSON archive.</p>
+                </div>
+                <button type="button" class="button button-gold db-action-btn" id="btn-export-db-json">
+                  Export JSON Backup &darr;
+                </button>
+              </div>
+
+              <div class="db-tool-item">
+                <div class="db-tool-icon">
+                  <svg class="ui-icon" style="width:28px;height:28px;color:#f97316;" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
+                </div>
+                <div class="db-tool-info">
+                  <strong>Reset / Reseed Sample Data</strong>
+                  <p>Reloads clean sample attendees, bookings, and default staff credentials for testing or training.</p>
+                </div>
+                <button type="button" class="button button-glass db-action-btn" id="btn-reseed-data" style="color:var(--dash-accent);">
+                  Reseed Sample Data
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Walk-In Student Modal -->
+  <div class="modal-backdrop" id="walkin-modal" role="dialog" aria-modal="true" hidden>
+    <div class="dialog walkin-dialog">
+      <button class="dialog-close" type="button" id="close-walkin-modal" aria-label="Close dialog">&times;</button>
+      <div class="walkin-modal-header">
+        <span class="booking-kicker">FRONT DESK WALK-IN</span>
+        <h2>Register Walk-in Student</h2>
+        <p>Record on-the-spot attendee check-in and payment at reception.</p>
+      </div>
+
+      <form id="walkin-form" class="walkin-form">
+        <div>
+          <label>Select Today's Class Session *</label>
+          <select id="walkin-session-select" required>
+            <!-- Populated by JS -->
+          </select>
+        </div>
+
+        <div>
+          <label>Student Full Name *</label>
+          <input type="text" id="walkin-name" placeholder="e.g. Juan dela Cruz" required>
+        </div>
+
+        <div class="form-row">
+          <div>
+            <label>Mobile Number *</label>
+            <input type="tel" id="walkin-mobile" placeholder="0917 123 4567" required>
+          </div>
+          <div>
+            <label>Number of Passes</label>
+            <input type="number" id="walkin-seats" min="1" max="10" value="1" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div>
+            <label>Payment Method *</label>
+            <select id="walkin-payment-method">
+              <option value="Cash at Front Desk">Cash at Reception</option>
+              <option value="GCash Direct Transfer">GCash Direct</option>
+              <option value="Maya QR">Maya QR</option>
+              <option value="Complimentary / Trial Pass">Complimentary / Free Pass</option>
+            </select>
+          </div>
+          <div>
+            <label>Auto Check-In</label>
+            <label class="checkbox-label" style="margin-top:8px;display:flex;align-items:center;gap:6px;font-size:13px;">
+              <input type="checkbox" id="walkin-auto-checkin" checked> Mark as Checked In
+            </label>
+          </div>
+        </div>
+
+        <div class="walkin-summary-bar">
+          <span>Total Fee:</span>
+          <strong id="walkin-total-fee">&#8369;0</strong>
+        </div>
+
+        <button type="submit" class="button button-gold" style="width:100%;margin-top:12px;">
+          Confirm Walk-in &amp; Check In &rarr;
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 1-Click Attendee SMS / Message Modal -->
+  <div class="modal-backdrop" id="sms-modal" role="dialog" aria-modal="true" hidden>
+    <div class="dialog sms-dialog">
+      <button class="dialog-close" type="button" id="close-sms-modal" aria-label="Close dialog">&times;</button>
+      <div class="sms-modal-header">
+        <span class="booking-kicker">FRONT DESK MESSAGING</span>
+        <h2>1-Click Attendee SMS &amp; Reminder</h2>
+        <p>Send an instant booking confirmation, schedule reminder, or studio advisory to the attendee's mobile phone.</p>
+      </div>
+
+      <div class="sms-modal-body">
+        <div class="sms-recipient-card">
+          <div class="sms-recipient-avatar" id="sms-avatar">ST</div>
+          <div class="sms-recipient-info">
+            <strong id="sms-recipient-name">Student Name</strong>
+            <span id="sms-recipient-phone">0917 000 0000</span>
+            <span class="sms-recipient-meta" id="sms-recipient-class">Class Name · Today</span>
+          </div>
+        </div>
+
+        <div class="sms-template-select-wrap">
+          <label for="sms-template-picker">Quick Message Template</label>
+          <select id="sms-template-picker">
+            <option value="reminder">Class Schedule Reminder (Today / Upcoming)</option>
+            <option value="confirmation">Booking &amp; Payment Confirmation</option>
+            <option value="bring-gear">Studio Prep: Bring Towel, Grip Socks &amp; Tumbler</option>
+            <option value="reschedule">Schedule Advisory / Room Assignment Notice</option>
+          </select>
+        </div>
+
+        <div class="sms-message-box-wrap">
+          <label for="sms-message-text">SMS Message Preview (Editable)</label>
+          <textarea id="sms-message-text" rows="5" class="sms-textarea"></textarea>
+          <div class="sms-char-counter">
+            <span id="sms-char-count">0 characters</span>
+            <span style="color:#64748b;">(Standard SMS: 160 chars)</span>
+          </div>
+        </div>
+
+        <div class="sms-action-buttons">
+          <button type="button" class="button button-gold" id="btn-copy-sms">
+            <svg class="ui-icon" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            Copy Text
+          </button>
+          <a id="btn-open-sms-app" href="#" class="button button-gold" style="text-decoration:none;">
+            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Open in SMS App &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="dash-toast" role="status" aria-live="polite"></div>
+
+  <script src="app-config.js"></script>
+  <script src="staff-auth.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

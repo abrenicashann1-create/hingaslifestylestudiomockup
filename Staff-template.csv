@@ -1,0 +1,5 @@
+staffCode,fullName,email,phone,role,status
+STF-001,Hingas Front Desk,frontdesk@hingas.ph,0917 555 0101,receptionist,active
+STF-002,Elena Rost (Studio Manager),manager@hingas.ph,0917 555 0102,manager,active
+STF-003,Coach Alex Bea,coach.alex@hingas.ph,0917 555 0103,coach,active
+STF-004,Coach Zin Perez,coach.zin@hingas.ph,0917 555 0104,coach,active

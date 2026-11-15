@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Executive Owner Dashboard — Hingas Lifestyle Studio</title>
+  <meta name="description" content="Executive business monitor, financial analytics, and studio operations control for Hingas Lifestyle Studio owners.">
+  <link rel="icon" type="image/png" href="logo(2).png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="owner.css">
+</head>
+<body class="owner-body">
+  <!-- Security Owner PIN Gate Overlay -->
+  <div class="owner-pin-gate" id="owner-pin-gate" role="dialog" aria-modal="true">
+    <div class="owner-pin-card">
+      <div class="owner-pin-brand">
+        <img src="logo(2).png" alt="Hingas Lifestyle Studio" width="160" height="70">
+      </div>
+      <div class="owner-security-badge">
+        <svg class="ui-icon" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        EXECUTIVE ACCESS ONLY
+      </div>
+      <h2>Studio Owner Portal</h2>
+      <p>Enter your Owner Master PIN to access financial metrics, coach performance, and revenue intelligence.</p>
+      
+      <form id="owner-pin-form" class="owner-pin-form">
+        <div id="owner-pin-error" class="owner-auth-alert" style="display:none;"></div>
+
+        <div class="owner-input-container">
+          <span class="owner-input-prefix">
+            <svg class="ui-icon" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>
+          </span>
+          <input type="password" id="owner-pin-input" maxlength="16" placeholder="Enter Owner Master PIN" autocomplete="current-password" autofocus required>
+          <button type="button" class="owner-pw-toggle" id="owner-pw-toggle" title="Toggle PIN visibility">
+            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+
+        <div class="owner-remember-row">
+          <label class="owner-checkbox-label">
+            <input type="checkbox" id="owner-pin-remember" checked>
+            <span>Remember session on this executive device</span>
+          </label>
+        </div>
+
+        <button type="submit" class="owner-submit-btn" id="btn-owner-unlock">
+          Unlock Executive Portal &rarr;
+        </button>
+
+        <div class="owner-pin-chip-wrap">
+          <button type="button" class="owner-quick-chip" id="chip-owner-pin">
+            <span>Master PIN:</span> <strong>owner2026</strong>
+          </button>
+        </div>
+      </form>
+
+      <div class="owner-pin-footer">
+        <a href="dashboard.html" class="owner-footer-link">&larr; Front Desk Staff Portal</a>
+        <span class="owner-footer-sep">&bull;</span>
+        <a href="index.html" class="owner-footer-link">Main Website &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Owner Dashboard -->
+  <div class="owner-app-container" id="owner-app" style="display: none;">
+    <!-- Top Executive Header -->
+    <header class="owner-topbar">
+      <div class="owner-topbar-left">
+        <a class="owner-brand" href="owner.html" title="Hingas Lifestyle Studio Executive Intelligence">
+          <img src="logo(2).png" alt="Hingas Logo" width="140" height="52">
+        </a>
+        <div class="owner-brand-divider"></div>
+        <span class="owner-portal-badge">
+          <svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Owner Intelligence
+        </span>
+        <span class="owner-live-clock" id="owner-clock">Loading live time...</span>
+      </div>
+
+      <div class="owner-topbar-center">
+        <!-- Timeframe selector -->
+        <div class="timeframe-selector" role="tablist" aria-label="Select revenue timeframe">
+          <button type="button" class="timeframe-btn active" data-range="today">Today</button>
+          <button type="button" class="timeframe-btn" data-range="week">This Week</button>
+          <button type="button" class="timeframe-btn" data-range="month">This Month</button>
+          <button type="button" class="timeframe-btn" data-range="all">All Time</button>
+        </div>
+      </div>
+
+      <div class="owner-topbar-right">
+        <a href="dashboard.html" class="owner-topbar-btn secondary" title="Open Front Desk Staff Portal">
+          <svg class="ui-icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Staff Portal</span>
+          <svg class="ui-icon-arrow" viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+        </a>
+        <button type="button" class="owner-topbar-btn secondary" id="btn-print-owner" title="Print Executive Briefing Summary">
+          <svg class="ui-icon" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+          <span>Print</span>
+        </button>
+        <button type="button" class="owner-topbar-btn primary" id="btn-export-ledger" title="Download Complete Financial Transactions CSV">
+          <svg class="ui-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span>Export Ledger</span>
+        </button>
+        <button type="button" class="owner-topbar-btn danger" id="btn-lock-owner" title="Lock Executive Portal">
+          <svg class="ui-icon" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>Lock</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="owner-main-content">
+      <!-- Executive Overview Banner -->
+      <section class="owner-section-intro">
+        <div>
+          <span class="owner-kicker">EXECUTIVE BRIEFING</span>
+          <h1>Studio Financial Intelligence</h1>
+          <p>Real-time revenue analytics, coach draw, facility occupancy, and space rentals for Hingas Lifestyle Studio.</p>
+        </div>
+        <div class="owner-status-pill">
+          <span class="status-dot"></span>
+          <span id="active-timeframe-label">Viewing: Today's Financials</span>
+        </div>
+      </section>
+
+      <!-- Top Financial Metrics Grid -->
+      <section class="owner-kpi-grid">
+        <div class="owner-kpi-card highlight-card">
+          <div class="kpi-header">
+            <span class="kpi-tag">TOTAL GROSS REVENUE</span>
+            <span class="kpi-trend positive" id="kpi-rev-trend">Live Cash Flow</span>
+          </div>
+          <div class="kpi-main-val" id="kpi-total-revenue">&#8369;0</div>
+          <div class="kpi-footer-detail">
+            <span>Passes sold: <strong id="kpi-passes-sold">0</strong></span>
+            <span>Avg ticket: <strong id="kpi-avg-ticket">&#8369;0</strong></span>
+          </div>
+        </div>
+
+        <div class="owner-kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-tag">STUDIO OCCUPANCY RATE</span>
+            <span class="kpi-trend" id="kpi-fill-badge">Optimal</span>
+          </div>
+          <div class="kpi-main-val" id="kpi-fill-rate">0%</div>
+          <div class="kpi-footer-detail">
+            <span>Booked: <strong id="kpi-booked-seats">0</strong></span>
+            <span>Capacity: <strong id="kpi-total-capacity">0 seats</strong></span>
+          </div>
+        </div>
+
+        <div class="owner-kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-tag">CASH IN STUDIO DRAWER</span>
+            <span class="kpi-trend" id="kpi-cash-badge">Reception</span>
+          </div>
+          <div class="kpi-main-val" id="kpi-cash-drawer">&#8369;0</div>
+          <div class="kpi-footer-detail">
+            <span>Digital GCash/Cards: <strong id="kpi-digital-funds">&#8369;0</strong></span>
+          </div>
+        </div>
+
+        <div class="owner-kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-tag">COMMERCIAL RENTALS PIPELINE</span>
+            <span class="kpi-trend" id="kpi-rental-badge">2 Inquiries</span>
+          </div>
+          <div class="kpi-main-val" id="kpi-rental-pipeline">&#8369;0</div>
+          <div class="kpi-footer-detail">
+            <span>Aqua Room: <strong>&#8369;600&ndash;&#8369;850/2h</strong></span>
+            <span>Main Studio: <strong>&#8369;750&ndash;&#8369;950/2h</strong></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Executive Insights & Studio Diagnostics Banner -->
+      <section class="owner-insights-strip">
+        <div class="insight-box">
+          <span class="insight-tag">TOP REVENUE PROGRAM</span>
+          <strong class="insight-title" id="insight-top-program">Zumba Fitness Party</strong>
+          <p class="insight-desc" id="insight-top-program-desc">Highest student demand with consistent drop-in attendance.</p>
+        </div>
+        <div class="insight-box">
+          <span class="insight-tag">COACH RETENTION DRAW</span>
+          <strong class="insight-title" id="insight-top-coach">Coach Zin &amp; Coach Bea</strong>
+          <p class="insight-desc" id="insight-top-coach-desc">Account for the majority of recurring weekly reservations.</p>
+        </div>
+        <div class="insight-box">
+          <span class="insight-tag">FACILITY UTILIZATION</span>
+          <strong class="insight-title" id="insight-studio-rooms">Main Studio &amp; Aqua Room</strong>
+          <p class="insight-desc" id="insight-studio-rooms-desc">Both rooms operational; available for private studio rentals and rehearsals.</p>
+        </div>
+      </section>
+
+      <!-- Low Occupancy Warning & Flash Promo Alert Section -->
+      <section class="owner-occupancy-section" id="owner-occupancy-alerts" style="display: none;">
+        <!-- Populated dynamically by JS -->
+      </section>
+
+      <!-- 2-Column Owner Analytics & Management Grid -->
+      <div class="owner-analytics-grid">
+        <!-- Column 1: Revenue by Category & Coach Performance -->
+        <div class="analytics-column">
+          <!-- Class Category Profitability Card -->
+          <div class="owner-panel-card">
+            <div class="panel-header">
+              <div>
+                <h3>Revenue by Movement Style</h3>
+                <p>Which programs generate the highest studio gross revenue.</p>
+              </div>
+            </div>
+            <div class="category-bars-list" id="category-revenue-bars">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- Coach Performance & Leaderboard Card -->
+          <div class="owner-panel-card">
+            <div class="panel-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+              <div>
+                <h3>Coach Attendance &amp; Payout Summary</h3>
+                <p>Student draw, room assignment, performance incentives, and estimated payroll.</p>
+              </div>
+              <button type="button" class="button button-glass owner-nav-link" id="btn-export-coach-payouts" style="font-size:12px;padding:6px 14px;min-height:32px;display:inline-flex;align-items:center;gap:6px;" title="Export Coach Payouts and Attendance Ledger">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Export Payouts CSV
+              </button>
+            </div>
+            <div class="coach-leaderboard-table-wrap">
+              <table class="coach-table">
+                <thead>
+                  <tr>
+                    <th>COACH</th>
+                    <th>STYLE</th>
+                    <th>SESSIONS</th>
+                    <th>STUDENTS</th>
+                    <th>EST. PAYOUT</th>
+                    <th>EST. REVENUE</th>
+                  </tr>
+                </thead>
+                <tbody id="coach-leaderboard-tbody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: Payment Methods, Rental Approvals & Live Activity Stream -->
+        <div class="analytics-column">
+          <!-- Payment Channels Breakdown -->
+          <div class="owner-panel-card">
+            <div class="panel-header">
+              <div>
+                <h3>Payment Channels &amp; Cash Flow Split</h3>
+                <p>Proportional breakdown across GCash, HitPay Cards, Maya, and Reception Cash.</p>
+              </div>
+            </div>
+
+            <!-- Proportional Visual Bar -->
+            <div class="payment-stacked-bar" id="payment-stacked-bar">
+              <!-- Rendered by JS -->
+            </div>
+
+            <div class="payment-channels-grid" id="payment-channels-grid">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- Commercial Studio Rental Approvals -->
+          <div class="owner-panel-card">
+            <div class="panel-header">
+              <div>
+                <h3>Commercial Rental Requests</h3>
+                <p>Private rehearsals, group choreography, and photoshoots.</p>
+              </div>
+              <span class="pending-pill" id="rental-pending-count">0 Pending</span>
+            </div>
+            <div class="owner-rental-requests" id="owner-rental-list">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- Real-Time Studio Activity Log -->
+          <div class="owner-panel-card">
+            <div class="panel-header">
+              <div>
+                <h3>Live Studio Activity Log</h3>
+                <p>Real-time audit log of attendee check-ins, bookings, and walk-ins.</p>
+              </div>
+              <span class="live-dot-pulse">&bull; LIVE</span>
+            </div>
+            <div class="activity-stream-list" id="owner-activity-stream">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="owner-toast" role="status" aria-live="polite"></div>
+
+  <script src="app-config.js"></script>
+  <script src="owner.js"></script>
+</body>
+</html>

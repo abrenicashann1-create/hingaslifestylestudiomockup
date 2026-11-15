@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a Class — Hingas Lifestyle Studio</title>
+  <meta name="description" content="Reserve your spot for Yoga, Basic Ballet, Step Hype, Zumba, Muay Thai, Gymnastics, and Dance at Hingas Lifestyle Studio in Surigao City.">
+  <link rel="icon" type="image/png" href="logo(2).png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="booking.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body class="booking-portal-body">
+  <a class="skip-link" href="#main-booking">Skip to booking</a>
+
+  <!-- Booking Portal Navigation Header -->
+  <header class="booking-header">
+    <div class="booking-header-inner">
+      <div class="booking-header-brand">
+        <a class="brand" href="index.html" aria-label="Back to Hingas Lifestyle Studio Website">
+          <img src="logo(2).png" alt="Hingas Lifestyle Studio official logo" width="140" height="62">
+        </a>
+        <a class="back-to-site-link" href="index.html">
+          <span aria-hidden="true">←</span> Main Website
+        </a>
+      </div>
+
+      <div class="booking-header-actions">
+        <button class="button button-glass ticket-lookup-btn" id="btn-my-tickets" type="button">
+          <svg class="ui-icon" viewBox="0 0 24 24"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/></svg> My Booked Passes
+        </button>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle mood lighting" title="Toggle theme">
+          <span class="theme-icon"><svg class="ui-icon theme-svg" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-booking" class="booking-main-container">
+    <!-- Portal Welcome Banner -->
+    <section class="portal-hero">
+      <div class="portal-hero-copy">
+        <span class="portal-eyebrow">HINGAS CLASS RESERVATIONS</span>
+        <h1>Reserve Your Spot</h1>
+        <p>Pick a date and session below. Instant confirmation with QR Studio Voucher for seamless reception check-in.</p>
+      </div>
+    </section>
+
+    <!-- View Switcher: Daily Sessions vs Multi-Class Bundles -->
+    <div class="booking-view-tabs" role="tablist" aria-label="Choose booking view">
+      <button type="button" class="view-tab-btn active" id="tab-view-schedule">
+        <svg class="ui-icon" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+        Scheduled Daily Classes
+      </button>
+      <button type="button" class="view-tab-btn" id="tab-view-packages">
+        <svg class="ui-icon" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+        Multi-Class Passes &amp; Packages (Save up to 15%)
+      </button>
+    </div>
+
+    <!-- Section 1: Schedule & Booking Controls -->
+    <section class="booking-app-section" id="section-schedule-view">
+      <!-- Calendar Controls Bar -->
+      <div class="calendar-controls-bar">
+        <div class="cal-view-switch" role="group" aria-label="Calendar view selector">
+          <button type="button" class="cal-switch-btn active" id="btn-view-strip">2-Week View</button>
+          <button type="button" class="cal-switch-btn" id="btn-view-month">Full Month</button>
+        </div>
+        <div class="month-nav-controls" id="month-nav-wrap">
+          <button type="button" class="month-arrow-btn" id="cal-prev-month" aria-label="Previous month">‹</button>
+          <span class="month-title-display" id="cal-month-display">November 2026</span>
+          <button type="button" class="month-arrow-btn" id="cal-next-month" aria-label="Next month">›</button>
+          <button type="button" class="today-jump-btn" id="today-button">Today</button>
+        </div>
+      </div>
+
+      <!-- 2-Week Quick Strip View -->
+      <div class="strip-view-container" id="strip-view-wrap">
+        <button type="button" class="strip-arrow-btn left" id="scroll-strip-left" aria-label="Scroll dates left">‹</button>
+        <div class="date-tabs" id="date-tabs" role="tablist" aria-label="Select date for classes"></div>
+        <button type="button" class="strip-arrow-btn right" id="scroll-strip-right" aria-label="Scroll dates right">›</button>
+      </div>
+
+      <!-- Full Month Grid View -->
+      <div class="full-month-view" id="month-view-wrap" style="display: none;">
+        <div class="month-week-header">
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+        <div class="month-grid" id="month-grid"></div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="schedule-filters-row">
+        <div class="schedule-search-bar">
+          <span class="search-icon" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+          <input type="text" id="class-search-input" placeholder="Search by class name, dance style, or coach..." aria-label="Search classes">
+          <button type="button" id="class-search-clear" class="search-clear-btn" aria-label="Clear search" style="display: none;">×</button>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="filter-pills-bar" id="category-pills"></div>
+
+      <!-- Selected Date Heading & Available Sessions Count -->
+      <div class="date-heading" id="selected-date-heading">
+        <div>
+          <span class="date-eyebrow">SCHEDULED SESSIONS</span>
+          <h2 id="current-day-label">Today's Classes</h2>
+        </div>
+        <div class="date-badge" id="date-summary-badge">Loading schedule...</div>
+      </div>
+
+      <!-- Session Cards Grid -->
+      <div class="classes-grid" id="class-list"></div>
+    </section>
+
+    <!-- Section 2: Multi-Class Packages & Bundles -->
+    <section class="packages-section" id="section-packages-view" style="display: none;">
+      <div class="packages-header">
+        <span class="date-eyebrow">STUDIO PACKAGES &amp; PASSES</span>
+        <h2>Flexible Multi-Session Bundles</h2>
+        <p>Save money and secure your fitness routine with pre-paid studio passes. Transferable and valid for all regular group classes.</p>
+      </div>
+
+      <div class="packages-grid">
+        <div class="package-card">
+          <span class="package-badge">POPULAR STARTER</span>
+          <h3>5-Class Flexi Pass</h3>
+          <div class="package-price">&#8369;950 <span>(&#8369;190 / class)</span></div>
+          <p class="package-sub">Save &#8369;50 vs drop-in rates. Perfect for trying multiple movement styles.</p>
+          <ul class="package-features">
+            <li><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Valid for any 5 regular group classes</li>
+            <li><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 45-day validity period</li>
+            <li><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Shareable with a friend or family member</li>
+            <li><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Instant QR pass code for fast desk check-in</li>
+          </ul>
+          <button type="button" class="button button-gold btn-buy-package" data-pkg="5-class" data-name="5-Class Flexi Pass" data-price="950">
+            Get 5-Class Pass &rarr;
+          </button>
+        </div>
+
+        <div class="package-card featured">
+          <span class="package-badge best-val">BEST VALUE</span>
+          <h3>10-Class Studio Pass</h3>
+          <div class="package-price">&#8369;1,800 <span>(&#8369;180 / class)</span></div>
+          <p class="package-sub">Save &#8369;200. Best for regular dancers, gymnasts, and yogis.</p>
+          <ul class="package-features">
+            <li><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Valid for any 10 regular group classes</li>
+            <li><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 90-day extended validity</li>
+            <li><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Priority booking access on waitlisted sessions</li>
+            <li><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Digital pass wallet stored on your device</li>
+          </ul>
+          <button type="button" class="button button-gold btn-buy-package" data-pkg="10-class" data-name="10-Class Studio Pass" data-price="1800">
+            Get 10-Class Pass &rarr;
+          </button>
+        </div>
+
+        <div class="package-card">
+          <span class="package-badge">UNLIMITED ACCESS</span>
+          <h3>30-Day VIP Pass</h3>
+          <div class="package-price">&#8369;2,900 <span>(30 Days)</span></div>
+          <p class="package-sub">Unlimited access to all Zumba, Yoga, Aerobics &amp; open practice sessions.</p>
+          <ul class="package-features">
+            <li><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Unlimited regular group fitness classes</li>
+            <li><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Valid for 30 consecutive calendar days</li>
+            <li><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 10% discount on private studio rentals</li>
+            <li><svg class="ui-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Dedicated locker and mat storage</li>
+          </ul>
+          <button type="button" class="button button-gold btn-buy-package" data-pkg="vip-monthly" data-name="30-Day VIP Unlimited Pass" data-price="2900">
+            Get 30-Day VIP &rarr;
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Interactive 4-Step Booking Modal -->
+  <div class="modal-backdrop" id="booking-modal" role="dialog" aria-modal="true" aria-labelledby="booking-dialog-title" hidden>
+    <div class="dialog booking-dialog">
+      <button class="dialog-close" type="button" data-close aria-label="Close booking modal">&times;</button>
+      <div id="booking-content"></div>
+    </div>
+  </div>
+
+  <!-- "My Bookings" Customer Lookup Modal -->
+  <div class="modal-backdrop" id="my-bookings-modal" role="dialog" aria-modal="true" aria-labelledby="lookup-dialog-title" hidden>
+    <div class="dialog lookup-dialog">
+      <button class="dialog-close" type="button" id="close-lookup-modal" aria-label="Close my bookings modal">&times;</button>
+      <div class="lookup-modal-header">
+        <span class="booking-kicker">STUDIO PASS LOOKUP</span>
+        <h2 id="lookup-dialog-title">My Booked Classes</h2>
+        <p>Access your digital passes, view QR voucher stamps, or print tickets.</p>
+      </div>
+      
+      <div class="lookup-search-box">
+        <input type="text" id="lookup-ref-input" placeholder="Enter Booking Reference (e.g. HG-8F2B1C) or Phone" aria-label="Lookup reference code">
+        <button type="button" class="button button-gold" id="btn-perform-lookup">Find Ticket</button>
+      </div>
+
+      <div class="lookup-results" id="my-saved-bookings-list"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="booking-portal-footer">
+    <div class="portal-footer-inner">
+      <p>© <span id="copyright-year">2026</span> Hingas Lifestyle Studio · 2nd Floor, Yamaha Eduhome, Surigao City</p>
+      <div class="portal-footer-links">
+        <a href="index.html">Main Website</a>
+        <a href="dashboard.html" class="portal-admin-link">Staff Portal &rarr;</a>
+        <a href="owner.html" class="portal-admin-link" style="color:#38bdf8;">Owner Portal &rarr;</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app-config.js"></script>
+  <script src="booking.js"></script>
+</body>
+</html>
