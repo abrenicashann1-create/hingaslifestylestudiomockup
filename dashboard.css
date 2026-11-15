@@ -1087,12 +1087,234 @@
   box-sizing: border-box;
 }
 
+/* Responsive Mobile & Tablet Architecture for Front-Desk Staff Portal */
+@media (max-width: 860px) {
+  .dash-topbar {
+    height: auto;
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .dash-topbar-left {
+    justify-content: space-between;
+    width: 100%;
+  }
+  .dash-topbar-right {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .dash-staff-pill {
+    flex: 1;
+    min-width: 150px;
+  }
+  .dash-walkin-btn {
+    flex: 2;
+    min-width: 160px;
+    justify-content: center;
+  }
+}
+
 @media (max-width: 768px) {
-  .auth-row-2col {
-    grid-template-columns: 1fr;
+  .dash-nav-tabs {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 4px;
+    margin-bottom: 16px;
+    padding-bottom: 4px;
+  }
+  .dash-nav-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .dash-tab {
+    padding: 10px 14px;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  .roster-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .roster-search {
+    width: 100%;
+    min-width: 0;
+  }
+  .roster-filters {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .roster-filters select,
+  .roster-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .roster-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+    margin: 0 -2px;
+  }
+  .roster-table {
+    min-width: 740px;
+  }
+  .roster-table th,
+  .roster-table td {
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 580px) {
+  .dash-container {
+    padding: 16px 12px 60px;
+  }
+  .dash-topbar {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  .dash-brand img {
+    height: 38px;
+    width: auto;
+  }
+  .dash-topbar-left .dash-clock {
+    display: none;
+  }
+  .dash-topbar-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .dash-staff-pill {
+    grid-column: 1 / -1;
+    width: 100%;
+    justify-content: space-between;
+    padding: 4px 10px;
   }
   .dash-staff-info {
-    display: none;
+    display: flex !important;
+    flex-direction: column;
+  }
+  .dash-walkin-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 40px;
+  }
+  .dash-topbar-right .button-glass,
+  .dash-topbar-right .button-gold:not(.dash-walkin-btn) {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    padding: 0 6px;
+    font-size: 11px;
+    min-height: 36px;
+  }
+
+  .dash-kpi-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .kpi-card {
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+  .kpi-value {
+    font-size: 22px;
+  }
+  .kpi-label {
+    font-size: 10px;
+  }
+  .kpi-icon {
+    top: 10px;
+    right: 10px;
+  }
+  .kpi-icon .ui-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Scanner Tab */
+  .scanner-card {
+    padding: 20px 16px;
+  }
+  .scanner-input-box {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .scanner-input-box input,
+  .scanner-input-box button {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  /* Schedule Tab */
+  .schedule-sessions-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Requests Tab */
+  .request-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .request-actions {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+  .request-actions button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  /* Staff & Database Tab */
+  .staff-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .staff-table {
+    min-width: 540px;
+  }
+
+  /* Modals & Dialogs */
+  .auth-modal-card,
+  .walkin-dialog,
+  .sms-dialog {
+    width: min(94vw, 420px) !important;
+    padding: 22px 16px !important;
+    border-radius: 16px !important;
+    margin: 16px auto;
+  }
+  .auth-header-pill h2,
+  .walkin-modal-header h2,
+  .sms-modal-header h2 {
+    font-size: 18px;
+  }
+  .auth-row-2col,
+  .form-row,
+  .sms-action-buttons {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .sms-action-buttons .button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  .dash-kpi-grid {
+    grid-template-columns: 1fr;
   }
 }
 

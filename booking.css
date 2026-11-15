@@ -538,16 +538,253 @@ html.theme-midnight .date-tab.active .date-tab-count {
   border-color: transparent;
 }
 
-@media (max-width: 680px) {
-  .booking-header-inner {
-    flex-wrap: wrap;
-  }
+/* ==========================================================================
+   Comprehensive Mobile & Tablet Responsive Architecture for Booking Portal
+   ========================================================================== */
+
+@media (max-width: 860px) {
   .portal-hero {
-    padding: 24px 20px;
+    padding: 32px 20px 24px;
   }
+  .portal-hero h1 {
+    font-size: clamp(26px, 5vw, 36px);
+  }
+  .packages-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 680px) {
+  .booking-header {
+    padding: 0;
+  }
+  .booking-header-inner {
+    padding: 10px 14px;
+    gap: 10px;
+  }
+  .portal-brand img {
+    height: 38px;
+    width: auto;
+  }
+  .booking-header-actions {
+    gap: 6px;
+  }
+  .header-btn {
+    padding: 7px 10px;
+    font-size: 11px;
+    min-height: 34px;
+  }
+  .theme-toggle {
+    width: 34px;
+    height: 34px;
+  }
+
+  .portal-hero {
+    padding: 22px 14px 18px;
+    text-align: center;
+  }
+  .portal-hero h1 {
+    font-size: 24px;
+    letter-spacing: -0.01em;
+  }
+  .portal-hero p {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  /* Segmented View Switcher */
+  .booking-view-tabs {
+    padding: 0 14px;
+    margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .view-tab-btn {
+    width: 100%;
+    padding: 8px 6px;
+    font-size: 11px;
+    justify-content: center;
+    text-align: center;
+    border-radius: 8px;
+  }
+
+  /* Date Strip Carousel */
+  .calendar-strip-wrap {
+    padding: 0 6px;
+  }
+  .strip-arrow-btn {
+    display: none !important;
+  }
+  .date-tabs {
+    padding: 4px 8px 12px;
+    gap: 8px;
+    scroll-padding: 8px;
+  }
+  .date-tab {
+    flex: 0 0 74px;
+    min-width: 74px;
+    min-height: 98px;
+    padding: 10px 4px 8px;
+    border-radius: 14px;
+  }
+  .date-tab-num {
+    font-size: 20px;
+  }
+  .date-tab-day,
+  .date-tab-month {
+    font-size: 10px;
+  }
+  .date-tab-count {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  /* Category Filter Pills */
+  .category-filter-strip {
+    padding: 0 14px 12px;
+    margin: 0;
+  }
+  .category-pills-list {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 6px;
+    padding-bottom: 2px;
+  }
+  .category-pills-list::-webkit-scrollbar {
+    display: none;
+  }
+  .category-pill {
+    padding: 6px 12px;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  /* Schedule Header & Search */
+  .schedule-section-header {
+    padding: 0 14px 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .schedule-section-header h2 {
+    font-size: 18px;
+  }
+  .class-search-box {
+    width: 100%;
+  }
+  .class-search-box input {
+    font-size: 13px;
+    height: 40px;
+  }
+
+  /* Class Cards */
+  .classes-grid {
+    padding: 0 14px;
+    gap: 12px;
+  }
+  .class-card {
+    padding: 14px;
+    border-radius: 16px;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    min-height: auto !important;
+  }
+  .class-card-time {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding-bottom: 6px;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: baseline !important;
+    width: 100%;
+  }
+  html.theme-midnight .class-card-time {
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+  }
+  .class-card-time strong {
+    font-size: 16px !important;
+  }
+  .class-card-main {
+    width: 100%;
+  }
+  .class-card-main h3 {
+    font-size: 16px !important;
+    margin-bottom: 4px;
+  }
+  .class-price {
+    font-size: 15px !important;
+    margin: 4px 0 0;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .class-card .button {
+    width: 100% !important;
+    min-height: 44px !important;
+    font-size: 13px !important;
+    justify-content: center !important;
+    border-radius: 10px;
+    margin-top: 4px;
+  }
+
+  /* Packages Grid */
+  .packages-section {
+    padding: 0 14px 60px;
+  }
+  .packages-header h2 {
+    font-size: 22px;
+  }
+  .packages-header p {
+    font-size: 13px;
+  }
+  .packages-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .package-card {
+    padding: 22px 16px;
+    border-radius: 16px;
+  }
+  .package-price {
+    font-size: 26px;
+  }
+  .btn-buy-package {
+    min-height: 44px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Modals on Mobile */
+  .modal-backdrop .dialog {
+    width: min(94vw, 420px) !important;
+    max-height: 90vh !important;
+    padding: 20px 16px !important;
+    border-radius: 18px !important;
+  }
+  .dialog-close {
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+  }
+  .booking-modal-header h2 {
+    font-size: 18px;
+  }
+
+  /* Footer */
   .portal-footer-inner {
     flex-direction: column;
     text-align: center;
+    gap: 12px;
+    padding: 24px 14px;
   }
 }
 
